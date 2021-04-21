@@ -4,35 +4,29 @@ import Footer from './components/footer'
 import Sidebar from './components/sidebar'
 import Content from './components/content'
 import Logo from './components/logo'
-import React from 'react';
+import React, { useState } from 'react';
 
-class App extends React.Component {
-  constructor(props){
-    super(props)
-    this.state={
-      clickCount:0,
-      logs:[]
-    }
-    this.handleClick=this.handleClick.bind(this)
-  }
-  handleClick(){
+function App(){
+  
+  const [clickCount, setCount] = useState(0);
+  const [logs, setLogs] = useState([]);
+
+  const handleClick = ()=>{
     var d = new Date();
     var hh = d.getHours()
     var mm = d.getMinutes()
     var ss = d.getSeconds()
     
-   
-    this.setState({
-      clickCount:this.state.clickCount+1,
-      logs:[...this.state.logs,hh+":"+mm+":"+ss]
-    })
-    this.updateScroll()
+    setCount(clickCount+1)
+    setLogs([...logs,hh+":"+mm+":"+ss])
+    updateScroll()
   }
-  updateScroll(){
+
+  const updateScroll=()=>{
     var element = document.getElementById("logs");
     element.scrollTop = element.scrollHeight;
   }
-  render(){
+ 
     return (
       <div className='App'>
           <div className="row">
@@ -41,18 +35,18 @@ class App extends React.Component {
           </div>
           <div className="row">
               <div className="col">
-                  <Sidebar handleClick={this.handleClick}/>
+                  <Sidebar handleClick={handleClick}/>
               </div>
               <div className="col">
-                <Content logs={this.state.logs}/>
-                <Footer clickCount={this.state.clickCount}/>
+                <Content logs={logs}/>
+                <Footer clickCount={clickCount}/>
               </div>
   
           </div>
   
       </div>
     );
-  }
+  
   
 }
 
